@@ -5,6 +5,7 @@ import java.util.Scanner;
 import java.util.HashMap;
 import java.util.Arrays;
 import java.util.TreeMap;
+import static java.lang.Math.min;
 
 public class NewJunior1946 {
     public static void main(String[] args) {
@@ -30,13 +31,18 @@ public class NewJunior1946 {
             treeMap.keySet().iterator();    // 오름차순 정렬
 //            System.out.println(treeMap.entrySet());
 
+            int value1 = treeMap.get(1);      // 서류 1위의 면접 결과를 기준점으로 시작
             for(int i=1; i<num; i++) {
-                for(int j=i+1; j>=i; j--) {
-                    int value1 = treeMap.get(i);
-                    int value2 = treeMap.get(j);
-//                    System.out.println("value "+ i + " : " + value1);
-//                    System.out.println("value " + j+ ": " + value2);
-                    if(value1 > value2) count[index] += 1;
+                value1 = min(value1 , treeMap.get(i));     // 숫자가 작을수록 순위 높으므로, min값을 value1에 넣음
+
+                int value2 = treeMap.get(i+1);
+//              System.out.println("value "+ i + " : " + value1);
+//              System.out.println("value " + j+ ": " + value2);
+
+                if(value1 > value2) {   // j보다 서류에서 순위가 높은 지원자 중에, j보다 면접 순위가 낮은 사람이 있다면,
+//                  System.out.println("합격 : " + j);
+                    count[index] += 1;
+
                 }
             }
             index++;
