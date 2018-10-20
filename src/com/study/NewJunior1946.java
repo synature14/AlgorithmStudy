@@ -10,7 +10,7 @@ import static java.lang.Math.min;
 public class NewJunior1946 {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
-        HashMap<Integer, Integer> map = new HashMap();
+        HashMap<Integer, Integer> map = new HashMap<>();
 
         int nCase = scan.nextInt();
         int[] count = new int[nCase];
