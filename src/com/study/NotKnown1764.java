@@ -11,6 +11,7 @@ public class NotKnown1764 {
 
         int numNonHeard = scan.nextInt();
         int numNonSeen = scan.nextInt();
+        scan.nextLine();
         HashMap<Character, ArrayList<String>> dictionary = new HashMap<>();
 
         ArrayList<String> nonHeardNames = new ArrayList<>();
