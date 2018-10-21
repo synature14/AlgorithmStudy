@@ -1,4 +1,4 @@
-package com.study;
+package com.study181023;
 // 10825 국영수
 
 import java.util.ArrayList;

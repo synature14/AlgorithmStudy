@@ -1,4 +1,4 @@
-package com.study;
+package com.study181023;
 // https://www.acmicpc.net/problem/1946
 
 import java.util.Scanner;

@@ -1,4 +1,4 @@
-package com.study;
+package com.study181023;
 
 //  2805 나무자르기
 import java.util.Arrays;

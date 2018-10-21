@@ -1,5 +1,6 @@
-package com.study;
+package com.study181023;
 
+// https://www.acmicpc.net/problem/1764
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -27,13 +28,13 @@ public class NotKnown1764 {
                 ArrayList<String> list = dictionary.get(key);
                 list.add(nonHeardNames.get(i));
 
-                System.out.println("On " + key + " , value added --> " + list.get(list.size()-1));
+//                System.out.println("On " + key + " , value added --> " + list.get(list.size()-1));
                 dictionary.replace(key, list);
             } else {
                 ArrayList<String> newList = new ArrayList<>();
-                newList.add(nonSeenNames.get(i));
-                System.out.println("New Key -- Value added : " + newList.get(0));
-                dictionary.put(nonSeenNames.get(i).charAt(0), newList);
+                newList.add(nonHeardNames.get(i));
+//                System.out.println("New Key -- Value added : " + newList.get(0));
+                dictionary.put(nonHeardNames.get(i).charAt(0), newList);
             }
         }
 
@@ -51,8 +52,8 @@ public class NotKnown1764 {
             }
         }
 
-        System.out.println(index + 1);
-        for(int i=0; i<index+1; i++) {
+        System.out.println(index);
+        for(int i=0; i<index; i++) {
             System.out.println(answer.get(i));
         }
 
