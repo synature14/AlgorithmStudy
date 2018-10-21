@@ -1,62 +1,66 @@
 package com.study181023;
 
 // https://www.acmicpc.net/problem/1764
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.util.*;
 import java.lang.*;
 
 public class NotKnown1764 {
+    static ArrayList<String> nonHeardNames = new ArrayList<>();
+    static ArrayList<String> nonSeenNames = new ArrayList<>();
+
+    public static boolean binarySearch(int left, int right, String name) {
+        if (left > right) {
+            return false;
+        }
+
+        int mid = (left + right) / 2;
+        if ( name.equals(nonHeardNames.get(mid)) ) {       // 찾았다면?
+            return true;
+        } else if ( name.compareTo(nonHeardNames.get(mid)) < 0 ) {   // 찾으려는 name이 비교값보다 더 앞에 우선하여 있을경우
+            return binarySearch(left, mid-1, name);
+        } else { // 찾으려는 name이 비교값보다 더 뒤에 있을경우
+            return binarySearch(mid+1, right, name);
+        }
+    }
+
     public static void main(String[] args) {
+//        long start = System.currentTimeMillis();
         Scanner scan = new Scanner(System.in);
 
         int numNonHeard = scan.nextInt();
         int numNonSeen = scan.nextInt();
         scan.nextLine();
-        HashMap<Character, ArrayList<String>> dictionary = new HashMap<>();
 
-        ArrayList<String> nonHeardNames = new ArrayList<>();
-        ArrayList<String> nonSeenNames = new ArrayList<>();
-        ArrayList<String> answer = new ArrayList<>();
-        int index = 0;
+        nonHeardNames = new ArrayList<>();
+        nonSeenNames = new ArrayList<>();
+        Stack<String> answerStack = new Stack<>();
 
         for(int i=0; i<numNonHeard; i++) {
             nonHeardNames.add(scan.nextLine());
-            char key = nonHeardNames.get(i).charAt(0);
-
-            if (dictionary.containsKey(key)) {     // 예) T로 시작하는 value를 이미 가지고있다면,
-                ArrayList<String> list = dictionary.get(key);
-                list.add(nonHeardNames.get(i));
-
-//                System.out.println("On " + key + " , value added --> " + list.get(list.size()-1));
-                dictionary.replace(key, list);
-            } else {
-                ArrayList<String> newList = new ArrayList<>();
-                newList.add(nonHeardNames.get(i));
-//                System.out.println("New Key -- Value added : " + newList.get(0));
-                dictionary.put(nonHeardNames.get(i).charAt(0), newList);
-            }
         }
+        Collections.sort(nonHeardNames);
 
         for(int i=0; i<numNonSeen; i++) {
-            nonSeenNames.add(scan.nextLine());
-            char key = nonSeenNames.get(i).charAt(0);
+            String name = scan.nextLine();
+            nonSeenNames.add(name);
 
-            if (dictionary.containsKey(key)) {
-                for (String strValue : dictionary.get(key)) {
-                    if( strValue.equals(nonSeenNames.get(i)) ) {
-                        answer.add(strValue);
-                        index++;
-                    }
-                }
+            // 듣도 보지도 못했다면
+            if(binarySearch(0, numNonSeen-1, name) == true ) {
+                answerStack.push(name);
             }
         }
 
-        System.out.println(index);
-        for(int i=0; i<index; i++) {
-            System.out.println(answer.get(i));
+        int size = answerStack.size();
+
+        Collections.sort(answerStack);
+        Collections.reverse(answerStack);
+        System.out.println(size);
+        for(int index=0; index<size; index++) {
+            System.out.println(answerStack.pop());
         }
 
-    }
 
+//        long end = System.currentTimeMillis();
+//        System.out.println((end-start)/1000 +" 초 걸림");
+    }
 }
