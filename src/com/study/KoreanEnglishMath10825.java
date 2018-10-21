@@ -22,8 +22,7 @@ public class KoreanEnglishMath10825 {
         }
     }
 
-    static class ScoreCompartor implements Comparator<Score> {
-
+    static class ScoreComparator implements Comparator<Score> {
         @Override
         public int compare(Score score1, Score score2) {
             int ret = 0;
@@ -80,7 +79,7 @@ public class KoreanEnglishMath10825 {
             totalArrayList.add(eachScore);
         }
 
-        Collections.sort(totalArrayList, ScoreCompartor);
+        Collections.sort(totalArrayList, ScoreComparator);
 
     }
 
