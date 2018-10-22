@@ -1,7 +1,6 @@
 package com.study181023;
 
 import java.util.Scanner;
-import java.util.Stack;
 import static java.lang.Math.max;
 
 public class GreedyPanda1937 {
