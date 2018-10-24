@@ -10,7 +10,7 @@ import static java.lang.Math.min;
 public class NewJunior1946 {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
-        HashMap<Integer, Integer> map = new HashMap<>();
+        TreeMap<Integer, Integer> treeMap = new TreeMap<>();
 
         int nCase = scan.nextInt();
         int[] count = new int[nCase];
@@ -24,10 +24,9 @@ public class NewJunior1946 {
                 int firstScore = scan.nextInt();        // 서류 순위
                 int secondScore = scan.nextInt();       // 면접 순위
 
-                map.put(firstScore, secondScore);
+                treeMap.put(firstScore, secondScore);
             }
 
-            TreeMap<Integer, Integer> treeMap = new TreeMap<>(map);
             treeMap.keySet().iterator();    // 오름차순 정렬
 //            System.out.println(treeMap.entrySet());
 

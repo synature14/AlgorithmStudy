@@ -1,5 +1,6 @@
 package com.study181023;
 
+import java.io.BufferedReader;
 import java.util.Scanner;
 import static java.lang.Math.max;
 
@@ -18,7 +19,7 @@ public class GreedyPanda1937 {
                 int nextY = positionY + dy[i];        // 행
                 int nextX = positionX + dx[i];        // 열
 
-                if( nextY >= 0 && nextX>=0 && nextX<size && nextY<size) {  // 범위 내에 있다면
+                if( nextY >= 0 && nextX>=0 && nextX<size && nextY<size ) {  // 범위 내에 있다면
                     if (bambooMap[nextY][nextX] > bambooMap[positionY][positionX]) {    // 이전에 먹은 대나무 양보다 많은 대나무가 있으면
                         dp[positionY][positionX] = max(dp[positionY][positionX], searchBamboo(nextY, nextX) + 1);
                     }
