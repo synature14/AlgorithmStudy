@@ -1,7 +1,7 @@
 package com.study181030;
 
 // 1차시도 : 그래프를 2차원 배열로 표현!, visited표시, DFS로 탐색
-// 2차시도 : 
+// 2차시도 :
 
 import java.io.BufferedReader;
 import java.io.IOException;
