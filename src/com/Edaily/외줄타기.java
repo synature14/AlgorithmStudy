@@ -3,10 +3,7 @@ package com.Edaily;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.PriorityQueue;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class 외줄타기 {
     public static class Pair implements Comparable<Pair> {
@@ -35,6 +32,7 @@ public class 외줄타기 {
         ArrayList<Pair>[] graph = new ArrayList[vertex+1];
         int nVisited;
         int[] distance = new int[vertex+1];     // distance[i] : i까지 도착하는데 걸리는 최단경로 -> 그 경로가 모든 노드를 거치는지 체크할것임
+        ArrayList<Integer> fullPaths = new ArrayList<>();
 
         for(int i=0; i<=vertex; i++) {
             distance[i] = 1000000;
@@ -56,7 +54,6 @@ public class 외줄타기 {
         while(node <= vertex) {
             // 초기화
             nVisited = 1;       // 본인 자기자신 방문.
-
             for(int i=0; i<=vertex; i++) {
                 if (i == node) {
                     distance[i] = 0;
@@ -83,15 +80,25 @@ public class 외줄타기 {
                         pq.add(new Pair(next.source, distance[nextIndex]));
                     }
                 }
-            }
-            if(nVisited == vertex) {
-                Arrays.sort(distance);
-                System.out.println("node : " + node + " --> " + distance[0]);
+
+                if(nVisited == vertex) {
+                    Arrays.sort(distance);
+                    fullPaths.add(distance[vertex-1]);
+                    System.out.println("node : " + node + " --> " + distance[vertex-1]);
+                    break;
+                }
             }
 
             node++;
         }
 
+        int min = 5000000;
+        for(int i=0; i<fullPaths.size(); i++) {
+            if( min > fullPaths.get(i) ) {
+                min = fullPaths.get(i);
+            }
+        }
+        System.out.println(min);
 
     }
 }
