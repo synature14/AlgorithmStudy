@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.util.*;
 
 public class 외줄타기 {
+    static int Max = 10000000;
     public static class Pair implements Comparable<Pair> {
         int source;
         int weight;
@@ -35,7 +36,7 @@ public class 외줄타기 {
         ArrayList<Integer> fullPaths = new ArrayList<>();
 
         for(int i=0; i<=vertex; i++) {
-            distance[i] = 1000000;
+            distance[i] = Max;
             graph[i] = new ArrayList<>();
         }
 
@@ -58,7 +59,7 @@ public class 외줄타기 {
                 if (i == node) {
                     distance[i] = 0;
                 } else {
-                    distance[i] = 1000000;
+                    distance[i] = Max;
                 }
             }
 
