@@ -1,6 +1,7 @@
 package com.study181030;
 
 // 웜홀, 도로 경로 이렇게 두개의 ArrayList만들어서 풀다가 포기.
+// 벨만 포드 알고리즘 - 음의 가중치가 있는 경
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,70 +25,76 @@ public class Wormhole1865 {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
 
-        String str = br.readLine();
-        st = new StringTokenizer(str, " ");
+        int T = Integer.parseInt(br.readLine());
+        Queue<String> answerQ = new LinkedList<>();
 
-        int n = Integer.parseInt(st.nextToken());
-        int m = Integer.parseInt(st.nextToken());
-        int nWormHole = Integer.parseInt(st.nextToken());
+        while(T > 0) {
 
-        ArrayList<Pair>[] graph = new ArrayList[m*2+nWormHole];
-
-        for(int i=0; i<m*2+nWormHole; i++) {
-            graph[i] = new ArrayList<>();
-        }
-
-        for(int i=0; i<m; i++) {
-            str = br.readLine();
+            String str = br.readLine();
             st = new StringTokenizer(str, " ");
-            int from = Integer.parseInt(st.nextToken());
-            int to = Integer.parseInt(st.nextToken());
-            int weight = Integer.parseInt(st.nextToken());
-            graph[from].add(new Pair(to, weight));
-            graph[to].add(new Pair(from, weight));      // 도로는 방향이 없으므로
-        }
 
-        for(int i=0; i<nWormHole; i++) {
-            str = br.readLine();
-            st = new StringTokenizer(str, " ");
-            int from = Integer.parseInt(st.nextToken());
-            int to = Integer.parseInt(st.nextToken());
-            int shortCut = Integer.parseInt(st.nextToken());
-            graph[from].add(new Pair(to, -shortCut));
-        }
+            int n = Integer.parseInt(st.nextToken());
+            int m = Integer.parseInt(st.nextToken());
+            int nWormHole = Integer.parseInt(st.nextToken());
 
-        int[] distance = new int[n+1];
-        Arrays.fill(distance, INF);
-        distance[1] = 0;
+            ArrayList<Pair>[] graph = new ArrayList[m*2+nWormHole];
 
-        for(int iterator=1; iterator<n; iterator++) {
-            for(int current=1; current<=n; current++) {   // 각 정점마다
-                for(int next=0; next<graph[current].size(); next++) {      // 연결된 edge or 웜홀 탐색
-                    Pair nextNode = graph[current].get(next);
+            for(int i=0; i<m*2+nWormHole; i++) {
+                graph[i] = new ArrayList<>();
+            }
 
-                    if(distance[next] > distance[current] + nextNode.weight) {
-                        distance[next] = distance[current] + nextNode.weight;
+            for(int i=0; i<m; i++) {
+                str = br.readLine();
+                st = new StringTokenizer(str, " ");
+                int from = Integer.parseInt(st.nextToken());
+                int to = Integer.parseInt(st.nextToken());
+                int weight = Integer.parseInt(st.nextToken());
+                graph[from].add(new Pair(to, weight));
+                graph[to].add(new Pair(from, weight));      // 도로는 방향이 없으므로
+            }
+
+            for(int i=0; i<nWormHole; i++) {
+                str = br.readLine();
+                st = new StringTokenizer(str, " ");
+                int from = Integer.parseInt(st.nextToken());
+                int to = Integer.parseInt(st.nextToken());
+                int shortCut = Integer.parseInt(st.nextToken());
+                graph[from].add(new Pair(to, -1 * shortCut));
+            }
+
+            int[] distance = new int[n+1];
+            Arrays.fill(distance, INF);
+            distance[1] = 0;
+
+            boolean isCycle = false;
+            for(int current=1; current<=n; current++) {
+                for(int next=1; next<=n; next++) {
+
+                    for(Pair each : graph[next]) {
+                        if(distance[each.source] > distance[next] + each.weight && distance[next] != INF) {
+                            distance[each.source] = distance[next] + each.weight;
+
+                            if(current == n) {      // 마지막 노드에서 값을 갱신하면, 음수 경로라는것.
+                                isCycle = true;
+                            }
+                        }
                     }
                 }
             }
-        }
 
-
-        boolean isFound = false;
-        for(int current=1; current<=n; current++) {
-            for(int next=0; next<graph[current].size(); next++) {
-                Pair nextNode = graph[current].get(next);
-
-                if(distance[next] > distance[current] + nextNode.weight) {
-                    isFound = true;
-                    distance[next] = distance[current] + nextNode.weight;
-                    break;
-                }
+            if (isCycle || distance[1] < 0) {
+                answerQ.add("YES");
+            } else {
+                answerQ.add("NO");
             }
-            if(isFound) break;
+
+            T--;
         }
 
+        while(!answerQ.isEmpty()) {
+            System.out.println(answerQ.poll());
+        }
 
-        System.out.println(isFound ? "YES" : "NO");
+        br.close();
     }
 }
