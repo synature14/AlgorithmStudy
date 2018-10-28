@@ -16,7 +16,7 @@ public class AlmostShortestPath5719 {
     static ArrayList<Path>[] savingEdge;
     static int start;
     static ArrayList<Path>[] graph;
-    static int INF = 10000000;
+    static int INF = 100000000;
 
     public static class Path implements Comparable<Path> {
         int source;
@@ -38,36 +38,39 @@ public class AlmostShortestPath5719 {
         Queue<Integer> answerQueue = new LinkedList<>();
         String nm;
 
-        do {
+        while(true){
             nm = br.readLine();
-            if( nm.equals("0 0") ) {
+            if(nm.equals("0 0")) {
                 break;
             }
 
             StringTokenizer st = new StringTokenizer(nm, " ");
             n = Integer.parseInt(st.nextToken());
-            int m = Integer.parseInt(st.nextToken());
+            int nEdge = Integer.parseInt(st.nextToken());
 
             String sd = br.readLine();
             st = new StringTokenizer(sd, " ");
             start = Integer.parseInt(st.nextToken());
             destination = Integer.parseInt(st.nextToken());
             distance = new int[n+1];
-            graph = new ArrayList[m+1];
-            visited = new boolean[n][n];
+            graph = new ArrayList[nEdge+1];
+            savingEdge = new ArrayList[nEdge+1];
+            visited = new boolean[n+1][n+1];
 
-            for(int i=0; i<=m; i++) {
+            for(int i=0; i<=nEdge; i++) {
                 graph[i] = new ArrayList<>();
+                savingEdge[i] = new ArrayList<>();
             }
 
 
-            for(int i=0; i<m; i++) {
+            for(int i=0; i<nEdge; i++) {
                 String road = br.readLine();
                 st = new StringTokenizer(road, " ");
                 int from = Integer.parseInt(st.nextToken());
                 int to = Integer.parseInt(st.nextToken());
                 int weight = Integer.parseInt(st.nextToken());
                 graph[from].add(new Path(to, weight));
+                savingEdge[to].add(new Path(from, weight));
             }
 
             dijkstra();
@@ -80,8 +83,7 @@ public class AlmostShortestPath5719 {
                 answerQueue.add(-1);
             }
 
-        } while(!nm.equals("0 0"));
-
+        }
 
         while(answerQueue.peek() != null) {
             System.out.println(answerQueue.poll());
@@ -90,8 +92,8 @@ public class AlmostShortestPath5719 {
     }
 
     public static void dijkstra() {        // k번째 최단경로
-        distance[start] = 0;
         Arrays.fill(distance, INF);
+        distance[start] = 0;
 
         PriorityQueue<Path> pq = new PriorityQueue<>();
         pq.add(new Path(start, 0));
@@ -106,7 +108,7 @@ public class AlmostShortestPath5719 {
                 int nextWeight = graph[currentIndex].get(i).weight;
 
                 if (distance[nextIndex] > nextWeight + currentWeight
-                        && visited[currentIndex][nextIndex] == false) {
+                        && visited[nextIndex][currentIndex] == false) {     // 도착지 -> 출발지로 오는 최단경로에 visited했으므로 행,열을 거꾸로 체크해야함
                     distance[nextIndex] = nextWeight + currentWeight;
                     pq.add(new Path(nextIndex, currentWeight + nextWeight));
                 }
@@ -116,24 +118,21 @@ public class AlmostShortestPath5719 {
 
     public static void removeEdge() {
         PriorityQueue<Path> pq = new PriorityQueue<>();
-        pq.add(new Path(destination, 0));
+        pq.add(new Path(destination, distance[destination]));       // 도착지에서부터 거꾸로 weight 줄여나가며 최단경로인 부분 visited 체크
 
         while(!pq.isEmpty()) {
             Path current = pq.poll();
             int currentIndex = current.source;
-            int currentWeight = current.weight;
 
-            for(Path each : graph[currentIndex]) {
+            for(Path each : savingEdge[currentIndex]) {
                 int nextIndex = each.source;
 
-                if(distance[nextIndex] == distance[currentIndex] + each.weight) {
+                if(distance[nextIndex] == distance[currentIndex] - each.weight) {
                     visited[currentIndex][nextIndex] = true;
-                    pq.add(new Path(nextIndex, currentWeight + each.weight));
+                    pq.add(new Path(nextIndex, distance[nextIndex]));
                 }
             }
         }
-
-
     }
 
 
