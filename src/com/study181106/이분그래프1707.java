@@ -1,6 +1,6 @@
 package com.study181106;
 
-// 이분그래프
+// 이분그래
 /*
 * BFS, DFS로 탐색하면서 정점을 방문할 때마다 두 가지 색 중 하나를 칠한다.
 다음 정점을 방문하면서 자신과 인접한 정점은 자신과 다른 색으로 칠한다.
@@ -69,6 +69,9 @@ public class 이분그래프1707 {
 
             isBipartite = true;
             for(int i=1; i<=vertex; i++) {
+                if(isBipartite == false) {
+                    break;
+                }
 
                 if(visited[i] == false) {
                     bfs(i, RED);
