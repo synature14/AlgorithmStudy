@@ -44,7 +44,7 @@ public class 스타트링크5014 {
             for(int i=0; i<2; i++) {
                 int next = current.floor + direction[i];
 
-                if (next <= F && next > 0) {
+                if (next <= F && next > 0) {        // 추가로 내려갈 수 있는 조건도 넣어야함!!!!!!1
                     if(!visited[next]) {
                         visited[next] = true;
                         queue.add(new Elevator(current.count+1, next));

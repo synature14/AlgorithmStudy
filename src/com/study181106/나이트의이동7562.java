@@ -1,5 +1,7 @@
 package com.study181106;
 
+// BFS
+// count 값도 함께 전달
 
 import java.io.BufferedReader;
 import java.io.IOException;

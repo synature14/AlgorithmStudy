@@ -19,7 +19,7 @@ public class 미친로봇1405 {
 
         st = new StringTokenizer(br.readLine(), " ");
         n = Integer.parseInt(st.nextToken());
-        visited = new boolean[30][30];
+        visited = new boolean[29][29];
 
         for(int i=0; i<4; i++) {
             possibility[i] = Double.parseDouble(st.nextToken()) / 100.0;
