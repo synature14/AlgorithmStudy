@@ -20,24 +20,20 @@ public class 가르침1062 {
         if (k>5) k -= 5;
 
         ArrayList<String>[] word = new ArrayList[51];
-        ArrayList<String> uniqueLetter = new ArrayList<>();
-        uniqueLetter.add("a");
-        uniqueLetter.add("n");
-        uniqueLetter.add("t");
-        uniqueLetter.add("i");
-        uniqueLetter.add("c");
+        ArrayList<String>[] uniqueLetter = new ArrayList[51];
 
         for(int i=0; i<n; i++) {
             word[i] = new ArrayList<>();
+            uniqueLetter[i] = new ArrayList<>();
             String[] str = br.readLine().split("");
 
             for(int j=0; j<str.length; j++) {
                 word[i].add(str[j]);
 
-                if(j>4 && j<str.length-4) {     // "anta" 와 "tica"의 사이 글자라면
-                    if(!uniqueLetter.contains(str[j])) {
-                        uniqueLetter.add(str[j]);
-                    }
+                if(j>3 && j<str.length-4    // "anta" 와 "tica"의 사이 글자라면
+                        && !str[j].equals("a") && !str[j].equals("n") && !str[j].equals("t") && !str[j].equals("i") && !str[j].equals("c")
+                        && !uniqueLetter[i].contains(str[j])) {
+                    uniqueLetter[i].add(str[j]);
                 }
             }
         }
@@ -48,8 +44,8 @@ public class 가르침1062 {
         for(int i=0; i<n; i++) {
             int count = 0;
 
-            for(int j=5; j<uniqueLetter.size(); j++) {
-                String letter = uniqueLetter.get(j);
+            for(int j=0; j<uniqueLetter[i].size(); j++) {
+                String letter = uniqueLetter[i].get(j);
                 if(word[i].contains(letter)) {
                     count += 1;
                 }
@@ -57,6 +53,7 @@ public class 가르침1062 {
             answer[i] = count;
         }
 
+        // 아래 코드가 논리적으로 어긋나는 케이스 있을듯
         Arrays.sort(answer);
         int readable = 0;
 
