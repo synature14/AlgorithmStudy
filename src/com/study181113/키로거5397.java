@@ -8,6 +8,7 @@ public class 키로거5397 {
 
         int nTestCase = scan.nextInt();
         scan.nextLine();
+        StringBuilder sb = new StringBuilder();
 
         while (nTestCase-- > 0) {
             ArrayList<String> leftList = new ArrayList<>();
