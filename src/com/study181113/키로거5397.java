@@ -2,7 +2,7 @@ package com.study181113;
 
 import java.util.*;
 
-public class 뱀3190 {
+public class 키로거5397 {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
 
