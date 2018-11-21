@@ -1,6 +1,9 @@
 package com.study181023;
 
 // https://www.acmicpc.net/problem/1764
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.*;
 import java.lang.*;
 
@@ -23,25 +26,24 @@ public class NotKnown1764 {
         }
     }
 
-    public static void main(String[] args) {
-//        long start = System.currentTimeMillis();
-        Scanner scan = new Scanner(System.in);
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine(), " ");
 
-        int numNonHeard = scan.nextInt();
-        int numNonSeen = scan.nextInt();
-        scan.nextLine();
+        int numNonHeard = Integer.parseInt(st.nextToken());
+        int numNonSeen = Integer.parseInt(st.nextToken());
 
         nonHeardNames = new ArrayList<>();
         nonSeenNames = new ArrayList<>();
         Stack<String> answerStack = new Stack<>();
 
         for(int i=0; i<numNonHeard; i++) {
-            nonHeardNames.add(scan.nextLine());
+            nonHeardNames.add(br.readLine());
         }
         Collections.sort(nonHeardNames);
 
         for(int i=0; i<numNonSeen; i++) {
-            String name = scan.nextLine();
+            String name = br.readLine();
             nonSeenNames.add(name);
 
             // 듣도 보지도 못했다면
